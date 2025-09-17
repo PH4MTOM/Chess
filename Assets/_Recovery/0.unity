@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000c975169869f5f050
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -388,90 +388,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1783159258
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1783159260}
-  - component: {fileID: 1783159259}
-  m_Layer: 0
-  m_Name: Light 2D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1783159259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783159258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
-  m_ComponentVersion: 2
-  m_LightType: 4
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_LightVolumeIntensity: 1
-  m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000c975169869f5f050
-  m_LightCookieSprite: {fileID: 0}
-  m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 0
-  m_NormalMapDistance: 3
-  m_NormalMapQuality: 2
-  m_UseNormalMap: 0
-  m_ShadowsEnabled: 1
-  m_ShadowIntensity: 0.75
-  m_ShadowSoftness: 0.3
-  m_ShadowSoftnessFalloffIntensity: 0.5
-  m_ShadowVolumeIntensityEnabled: 0
-  m_ShadowVolumeIntensity: 0.75
-  m_LocalBounds:
-    m_Center: {x: 0, y: -0.00000011920929, z: 0}
-    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
-  m_ShapeLightParametricSides: 5
-  m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
-  m_ShapeLightFalloffOffset: {x: 0, y: 0}
-  m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
---- !u!4 &1783159260
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783159258}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4164921, y: -0.16231665, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105403534
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,18 +417,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabf176831216a64fbc92218717e6c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  whitePawnSprite: {fileID: 8520448073204271173, guid: cdbe4210d7440ff4f965aff5fa799587, type: 3}
-  blackPawnSprite: {fileID: -8928637496743939054, guid: 271d66a0f207ca146b27c351419b13d5, type: 3}
-  whiteRookSprite: {fileID: -966054619311559134, guid: 5c5e28db62ced574782567997f2d45ef, type: 3}
-  blackRookSprite: {fileID: 247264735202899838, guid: 19489fb6532797f40a1e76c369394b32, type: 3}
-  whiteBishopSprite: {fileID: 6532668972398578517, guid: bab792a693c3eb34fa6b177d6a045ab4, type: 3}
-  blackBishopSprite: {fileID: 816014114880868158, guid: 5bef34b894407fa4a9a43ced49e18293, type: 3}
-  whiteKnightSprite: {fileID: -4530790798289296031, guid: b68e549c6a39aef4e9797f7170187a4f, type: 3}
-  blackKnightSprite: {fileID: 2486460698689547381, guid: c5e778286dbc27444b5fb41a96a3edd1, type: 3}
-  whiteQueenSprite: {fileID: 5939399252743449419, guid: 046cbde2cbd786e429035de6e982def4, type: 3}
-  blackQueenSprite: {fileID: -4899613061650751899, guid: 017da3dd476365e47a2dcef48c6f4568, type: 3}
-  whiteKingSprite: {fileID: 2067215984140437825, guid: 42e0abebbc6e85447844f4024289edb1, type: 3}
-  blackKingSprite: {fileID: -4962242470506266145, guid: 7acb1409af58c184a995252d73a588cf, type: 3}
+  whitePawnSprite: {fileID: 0}
+  blackPawnSprite: {fileID: 0}
+  whiteRookSprite: {fileID: 0}
+  blackRookSprite: {fileID: 0}
+  whiteBishopSprite: {fileID: 0}
+  blackBishopSprite: {fileID: 0}
+  whiteKnightSprite: {fileID: 0}
+  blackKnightSprite: {fileID: 0}
+  whiteQueenSprite: {fileID: 0}
+  blackQueenSprite: {fileID: 0}
+  whiteKingSprite: {fileID: 0}
+  blackKingSprite: {fileID: 0}
   piecePreFab: {fileID: 6321769240138600098, guid: 4c5693547156b4c47a26fad8f9fbf389, type: 3}
   pieceParent: {fileID: 2105403536}
 --- !u!4 &2105403536
@@ -538,4 +454,3 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 239518191}
   - {fileID: 2105403536}
-  - {fileID: 1783159260}

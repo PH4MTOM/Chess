@@ -33,8 +33,8 @@ public class ChessPieces : MonoBehaviour
     //    "whiteKingSprite", "whiteBishopSprite", "whiteKnightSprite", "whiteRookSprite" };
 
     // Need to fix this.
-    Sprite[] spriteWhite = { whitePawnSprite, whiteKnightSprite, whiteBishopSprite, whiteQueenSprite, 
-                            whiteKingSprite, whiteBishopSprite, whiteKnightSprite, whiteRookSprite };
+    //Sprite[] spriteWhite = { whitePawnSprite, whiteKnightSprite, whiteBishopSprite, whiteQueenSprite, 
+    //                        whiteKingSprite, whiteBishopSprite, whiteKnightSprite, whiteRookSprite };
 
     void GeneratePieces()
     {
@@ -57,11 +57,11 @@ public class ChessPieces : MonoBehaviour
             blackPawn.GetComponent<SpriteRenderer>().sprite = blackPawnSprite;
 
             //White Pieces (Rook, Knight, Bishop, Queen, King)
-            Vector3 startPositionWhite = new Vector3((x * tileSize) - offset, (0 * tileSize) - offset);
+            //Vector3 startPositionWhite = new Vector3((x * tileSize) - offset, (0 * tileSize) - offset);
 
-            GameObject whitePieces = Instantiate(piecePreFab, startPositionWhite, Quaternion.identity, pieceParent);
-            whitePieces.name = $"{spriteWhite[x]}_{x}_7";
-            whitePieces.GetComponent<SpriteRenderer>().sprite = spriteWhite[x];
+            //GameObject whitePieces = Instantiate(piecePreFab, startPositionWhite, Quaternion.identity, pieceParent);
+            //whitePieces.name = $"{spriteWhite[x]}_{x}_7";
+            //whitePieces.GetComponent<SpriteRenderer>().sprite = spriteWhite[x];
         }
     }
 
