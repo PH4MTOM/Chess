@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Pawn : ChessPiece
+public class Rook : ChessPiece
 {
-    public Sprite whitePawnSprite;
-    public Sprite blackPawnSprite;
+    public Sprite whiteRookSprite;
+    public Sprite blackRookSprite;
     public override void Move(Vector3 newPosition)
     {
         throw new System.NotImplementedException();
@@ -16,15 +16,16 @@ public class Pawn : ChessPiece
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() 
+    void Start()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (PieceColor == Color.White)
         {
-            sr.sprite = whitePawnSprite;
-        } else
+            sr.sprite = whiteRookSprite;
+        }
+        else
         {
-            sr.sprite = blackPawnSprite;
+            sr.sprite = blackRookSprite;
         }
     }
 

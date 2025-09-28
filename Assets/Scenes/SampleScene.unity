@@ -501,20 +501,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabf176831216a64fbc92218717e6c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  whitePawnSprite: {fileID: 8520448073204271173, guid: cdbe4210d7440ff4f965aff5fa799587, type: 3}
-  blackPawnSprite: {fileID: -8928637496743939054, guid: 271d66a0f207ca146b27c351419b13d5, type: 3}
-  whiteRookSprite: {fileID: -966054619311559134, guid: 5c5e28db62ced574782567997f2d45ef, type: 3}
-  blackRookSprite: {fileID: 247264735202899838, guid: 19489fb6532797f40a1e76c369394b32, type: 3}
-  whiteBishopSprite: {fileID: 6532668972398578517, guid: bab792a693c3eb34fa6b177d6a045ab4, type: 3}
-  blackBishopSprite: {fileID: 816014114880868158, guid: 5bef34b894407fa4a9a43ced49e18293, type: 3}
-  whiteKnightSprite: {fileID: -4530790798289296031, guid: b68e549c6a39aef4e9797f7170187a4f, type: 3}
-  blackKnightSprite: {fileID: 2486460698689547381, guid: c5e778286dbc27444b5fb41a96a3edd1, type: 3}
-  whiteQueenSprite: {fileID: 5939399252743449419, guid: 046cbde2cbd786e429035de6e982def4, type: 3}
-  blackQueenSprite: {fileID: -4899613061650751899, guid: 017da3dd476365e47a2dcef48c6f4568, type: 3}
-  whiteKingSprite: {fileID: 2067215984140437825, guid: 42e0abebbc6e85447844f4024289edb1, type: 3}
-  blackKingSprite: {fileID: -4962242470506266145, guid: 7acb1409af58c184a995252d73a588cf, type: 3}
-  piecePreFab: {fileID: 6321769240138600098, guid: 4c5693547156b4c47a26fad8f9fbf389, type: 3}
   pieceParent: {fileID: 2105403536}
+  pawnPreFab: {fileID: 4498740388859783077, guid: 807c6c6f881611649928c0e82ceca0f4, type: 3}
+  rookPreFab: {fileID: 4927786717738108362, guid: 6b724922152cb064194f9475111c98e5, type: 3}
+  knightPreFab: {fileID: 8584756496075990457, guid: 85991bea7d0eab74185c6f311a7dd5da, type: 3}
+  bishopPreFab: {fileID: 219625363558772446, guid: 95e5fe4e2e6f43d45955fec18c48d703, type: 3}
+  queenPreFab: {fileID: 4169027335322925452, guid: 3f1985955c3e5184b80ccc03d2537b3b, type: 3}
+  kingPreFab: {fileID: 8636850979072299682, guid: dcc7f2860857b674b833c2576d0879c5, type: 3}
 --- !u!4 &2105403536
 Transform:
   m_ObjectHideFlags: 0
