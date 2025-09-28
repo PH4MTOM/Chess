@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ChessPieces : MonoBehaviour
@@ -26,11 +27,30 @@ public class ChessPieces : MonoBehaviour
         GeneratePieces();
     }
 
+    string[] spriteWhite = { "whiteRookSprite", "whiteKnightSprite", "whiteBishopSprite", "whiteQueenSprite",
+        "whiteKingSprite", "whiteBishopSprite", "whiteKnightSprite", "whiteRookSprite" };
+
     string[] spriteBlack = { "blackRookSprite", "blackKnightSprite", "blackBishopSprite", "blackQueenSprite",
         "blackKingSprite", "blackBishopSprite", "blackKnightSprite", "blackRookSprite" };
 
-    //string[] spriteWhite = { "whiteRookSprite", "whiteKnightSprite", "whiteBishopSprite", "whiteQueenSprite",
-    //    "whiteKingSprite", "whiteBishopSprite", "whiteKnightSprite", "whiteRookSprite" };
+    private Dictionary<string, Sprite> spriteMap;
+
+    private void Awake()
+    {
+        spriteMap = new Dictionary<string, Sprite>
+        {
+            { "whiteRookSprite", whiteRookSprite },
+            { "whiteKnightSprite", whiteKnightSprite },
+            { "whiteBishopSprite", whiteBishopSprite },
+            { "whiteQueenSprite", whiteQueenSprite },
+            { "whiteKingSprite", whiteKingSprite },
+            { "blackRookSprite", blackRookSprite },
+            { "blackKnightSprite", blackKnightSprite },
+            { "blackBishopSprite", blackBishopSprite },
+            { "blackQueenSprite", blackQueenSprite },
+            { "blackKingSprite", blackKingSprite }
+        };
+    }
 
     // Need to fix this.
     //Sprite[] spriteWhite = { whitePawnSprite, whiteKnightSprite, whiteBishopSprite, whiteQueenSprite, 
@@ -57,11 +77,18 @@ public class ChessPieces : MonoBehaviour
             blackPawn.GetComponent<SpriteRenderer>().sprite = blackPawnSprite;
 
             //White Pieces (Rook, Knight, Bishop, Queen, King)
-            //Vector3 startPositionWhite = new Vector3((x * tileSize) - offset, (0 * tileSize) - offset);
+            Vector3 startPositionWhite = new Vector3((x * tileSize) - offset, (0 * tileSize) - offset);
+            GameObject whitePieces = Instantiate(piecePreFab, startPositionWhite, Quaternion.identity, pieceParent);
+            whitePieces.name = $"{spriteWhite[x]}_{x}_0";
+            Sprite currentSpriteWhite = spriteMap[spriteWhite[x]];
+            whitePieces.GetComponent<SpriteRenderer>().sprite = currentSpriteWhite;
 
-            //GameObject whitePieces = Instantiate(piecePreFab, startPositionWhite, Quaternion.identity, pieceParent);
-            //whitePieces.name = $"{spriteWhite[x]}_{x}_7";
-            //whitePieces.GetComponent<SpriteRenderer>().sprite = spriteWhite[x];
+            //Black Pieces (Rook, Knight, Bishop, Queen, King)
+            Vector3 startPositionBlack = new Vector3((x * tileSize) - offset, (7 * tileSize) - offset);
+            GameObject blackPieces = Instantiate(piecePreFab, startPositionBlack, Quaternion.identity, pieceParent);
+            blackPieces.name = $"{spriteBlack[x]}_{x}_7";
+            Sprite currentSpriteBlack = spriteMap[spriteBlack[x]];
+            blackPieces.GetComponent<SpriteRenderer>().sprite = currentSpriteBlack;
         }
     }
 
