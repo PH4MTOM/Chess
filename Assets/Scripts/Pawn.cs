@@ -8,7 +8,6 @@ public class Pawn : ChessPiece
 
     public override List<MoveData> GetPossibleMoves()
     {
-        // Not working. Need to use the Move Function Instead.
         List<MoveData> moves = new List<MoveData>();
 
         if (PieceColor == Color.White)
