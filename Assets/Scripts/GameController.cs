@@ -45,12 +45,13 @@ public class GameController : MonoBehaviour
 
         selectedPiece = piece;
         selectedPiece.Select();
-        Debug.Log("Current Position: " + selectedPiece.transform.position.ToString());
-        foreach(Vector2 item in selectedPiece.GetPossibleMoves())
+        Debug.Log($"Current PixelPos: {selectedPiece.transform.position.ToString()}, Current TilePos: {selectedPiece.CurrentTilePosition.ToString()}");
+        foreach(ChessPiece.MoveData item in selectedPiece.GetPossibleMoves())
         {
-            Debug.Log(item);
+            Debug.Log($"Pixel: {item.pixelPos}, Tile: {item.tilePos}");
         }
         // Moving a piece to a new area
-        selectedPiece.Move(selectedPiece.GetPossibleMoves()[0]);
+        ChessPiece.MoveData firstmove = selectedPiece.GetPossibleMoves()[0];
+        selectedPiece.Move(firstmove.pixelPos, firstmove.tilePos);
     }
 }

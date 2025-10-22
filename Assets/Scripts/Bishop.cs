@@ -6,7 +6,7 @@ public class Bishop : ChessPiece
     public Sprite whiteBishopSprite;
     public Sprite blackBishopSprite;
 
-    public override List<Vector2> GetPossibleMoves()
+    public override List<MoveData> GetPossibleMoves()
     {
         throw new System.NotImplementedException();
     }

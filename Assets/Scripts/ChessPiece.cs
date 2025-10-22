@@ -9,15 +9,26 @@ public abstract class ChessPiece : MonoBehaviour
     public string PieceName { get; protected set; }
     public bool HasMoved { get; protected set; } = false; // Useful for pawns and castling
     public bool IsCaptured { get; protected set; } = false;
-    public abstract List<Vector2> GetPossibleMoves();
+    public abstract List<MoveData> GetPossibleMoves();
     public (int, int) CurrentTilePosition;
+
+    public struct MoveData
+    {
+        public Vector2 pixelPos;
+        public (int, int) tilePos;
+
+        public MoveData(Vector2 posA, (int, int) posB)
+        {
+            pixelPos = posA;
+            tilePos = posB;            
+        }
+    }
 
     // Vector2 startPosition,
     public void Init(string name, Color color, (int, int) tilePosition)
     {
         PieceName = name;
         PieceColor = color;
-        //CurrentPosition = startPosition;
         gameObject.name = name;
         CurrentTilePosition = tilePosition;
     }
@@ -31,7 +42,7 @@ public abstract class ChessPiece : MonoBehaviour
         Debug.Log($"{PieceName} deselected.");
     }
     // Translate from tile cords to pixel cords
-    public Vector2 TranslateTilecordToPixelcord(int x, int y)
+    public Vector2 TranslateTileposToPixelpos(int x, int y)
     {
         float tileSize = 1.28f;
         float offset = tileSize * 3.5f;
@@ -43,8 +54,9 @@ public abstract class ChessPiece : MonoBehaviour
 
         return newPixelPos;
     }
-    public void Move(Vector2 newPosition)
+    public void Move(Vector2 pixelPos, (int, int) tilePos)
     {
-        gameObject.transform.position = newPosition;
+        gameObject.transform.position = pixelPos;
+        CurrentTilePosition = tilePos;
     }
 }

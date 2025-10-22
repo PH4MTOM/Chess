@@ -6,7 +6,7 @@ public class Rook : ChessPiece
     public Sprite whiteRookSprite;
     public Sprite blackRookSprite;
 
-    public override List<Vector2> GetPossibleMoves()
+    public override List<MoveData> GetPossibleMoves()
     {
         throw new System.NotImplementedException();
     }

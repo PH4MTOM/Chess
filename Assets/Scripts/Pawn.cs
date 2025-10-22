@@ -6,44 +6,44 @@ public class Pawn : ChessPiece
     public Sprite whitePawnSprite;
     public Sprite blackPawnSprite;
 
-    public override List<Vector2> GetPossibleMoves()
+    public override List<MoveData> GetPossibleMoves()
     {
         // Not working. Need to use the Move Function Instead.
-        List<Vector2> moves = new List<Vector2>();
+        List<MoveData> moves = new List<MoveData>();
 
         if (PieceColor == Color.White)
         {
             // Move 1 step forward
-            moves.Add(TranslateTilecordToPixelcord(0, 1));
+            moves.Add(new MoveData(TranslateTileposToPixelpos(0, 1), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 + 1)));
 
             // Move 2 steps if coming from it starting position
             if (CurrentTilePosition.Item2 == 1)
             {
-                moves.Add(TranslateTilecordToPixelcord(0, 2));
+                moves.Add(new MoveData(TranslateTileposToPixelpos(0, 2), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 + 2)));
             }
 
             // Move up and right
-            moves.Add(TranslateTilecordToPixelcord(1, 1));
+            moves.Add(new MoveData(TranslateTileposToPixelpos(1, 1), (CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 + 1)));
 
             // Move up and left
-            moves.Add(TranslateTilecordToPixelcord(-1, 1));
+            moves.Add(new MoveData(TranslateTileposToPixelpos(-1, 1), (CurrentTilePosition.Item1  - 1, CurrentTilePosition.Item2 + 1)));
         } 
         else
         {
             // Move 1 step forward
-            moves.Add(TranslateTilecordToPixelcord(0, -1));
+            moves.Add(new MoveData(TranslateTileposToPixelpos(0, -1), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 - 1)));
 
             // Move 2 steps if coming from it starting position
             if (CurrentTilePosition.Item2 == 6)
             {
-                moves.Add(TranslateTilecordToPixelcord(0, -2));
+                moves.Add(new MoveData(TranslateTileposToPixelpos(0, -2), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 - 2)));
             }
 
             // Move up and right
-            moves.Add(TranslateTilecordToPixelcord(-1, -1));
+            moves.Add(new MoveData(TranslateTileposToPixelpos(-1, -1), (CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 -1)));
 
             // Move up and left
-            moves.Add(TranslateTilecordToPixelcord(1, -1));
+            moves.Add(new MoveData(TranslateTileposToPixelpos(1, -1), (CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 - 1)));
         }
         return moves;
     }

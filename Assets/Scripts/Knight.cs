@@ -6,7 +6,7 @@ public class Knight : ChessPiece
     public Sprite whiteKnightSprite;
     public Sprite blackKnightSprite;
 
-    public override List<Vector2> GetPossibleMoves()
+    public override List<MoveData> GetPossibleMoves()
     {
         throw new System.NotImplementedException();
     }
