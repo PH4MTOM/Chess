@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-
     public Chessboard board;
     public ChessPieces pieces;
     private ChessPiece selectedPiece;
@@ -46,6 +45,12 @@ public class GameController : MonoBehaviour
 
         selectedPiece = piece;
         selectedPiece.Select();
-        Debug.Log(selectedPiece.CurrentPosition);
+        Debug.Log("Current Position: " + selectedPiece.transform.position.ToString());
+        foreach(Vector2 item in selectedPiece.GetPossibleMoves())
+        {
+            Debug.Log(item);
+        }
+        // Moving a piece to a new area
+        selectedPiece.Move(selectedPiece.GetPossibleMoves()[0]);
     }
 }

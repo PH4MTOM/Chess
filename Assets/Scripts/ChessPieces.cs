@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,22 +38,22 @@ public class ChessPieces : MonoBehaviour
             // Create WhitePawn
             Vector3 startPositionWhitePawn = new Vector2((x * tileSize) - offset, (1 * tileSize) - offset);
             ChessPiece whitePawn = Instantiate(pawnPreFab, startPositionWhitePawn, Quaternion.identity, pieceParent);
-            whitePawn.Init(name: $"WhitePawn_{x}_1", color: ChessPiece.Color.White, startPosition: startPositionWhitePawn);
+            whitePawn.Init(name: $"WhitePawn_{x}_1", color: ChessPiece.Color.White, tilePosition: (x,1));
 
             // Create BlackPawn
             Vector3 startPositionBlackPawn = new Vector2((x * tileSize) - offset, (6 * tileSize) - offset);
             ChessPiece blackPawn = Instantiate(pawnPreFab, startPositionBlackPawn, Quaternion.identity, pieceParent);
-            blackPawn.Init(name: $"BlackPawn_{x}_6", color: ChessPiece.Color.Black, startPosition: startPositionBlackPawn);
+            blackPawn.Init(name: $"BlackPawn_{x}_6", color: ChessPiece.Color.Black, tilePosition: (x, 6));
 
             // Create White Pieces (Rook, Knight, Bishop, Queen, King)
             Vector3 startPositionWhite = new Vector2((x * tileSize) - offset, (0 * tileSize) - offset);
             ChessPiece whitePiece = Instantiate(pieceMap[pieceSpawnSequence[x]], startPositionWhite, Quaternion.identity, pieceParent);
-            whitePiece.Init(name: $"White{pieceSpawnSequence[x]}_{x}_1", color: ChessPiece.Color.White, startPosition: startPositionWhite);
+            whitePiece.Init(name: $"White{pieceSpawnSequence[x]}_{x}_1", color: ChessPiece.Color.White, tilePosition: (x, 0));
 
             // Create Black Pieces (Rook, Knight, Bishop, Queen, King)
             Vector3 startPositionBlack = new Vector2((x * tileSize) - offset, (7 * tileSize) - offset);
             ChessPiece blackPiece = Instantiate(pieceMap[pieceSpawnSequence[x]], startPositionBlack, Quaternion.identity, pieceParent);
-            blackPiece.Init(name: $"Black{pieceSpawnSequence[x]}_{x}_7", color: ChessPiece.Color.Black, startPosition: startPositionBlack);
+            blackPiece.Init(name: $"Black{pieceSpawnSequence[x]}_{x}_7", color: ChessPiece.Color.Black, tilePosition: (x, 7));
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
