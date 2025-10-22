@@ -5,12 +5,12 @@ public class King : ChessPiece
 {
     public Sprite whiteKingSprite;
     public Sprite blackKingSprite;
-    public override void Move(Vector3 newPosition)
+    public override void Move(Vector2 newPosition)
     {
         throw new System.NotImplementedException();
     }
 
-    public override List<Vector3> GetPossibleMoves()
+    public override List<Vector2> GetPossibleMoves()
     {
         throw new System.NotImplementedException();
     }
@@ -18,6 +18,7 @@ public class King : ChessPiece
     void Start()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        BoxCollider2D bc = GetComponent<BoxCollider2D>();
         if (PieceColor == Color.White)
         {
             sr.sprite = whiteKingSprite;
@@ -26,6 +27,14 @@ public class King : ChessPiece
         {
             sr.sprite = blackKingSprite;
         }
+
+        if (sr.sprite != null)
+        {
+            Vector2 size = sr.sprite.bounds.size;
+            bc.size = size;
+            bc.offset = sr.sprite.bounds.center;
+        }
+
     }
 
     // Update is called once per frame

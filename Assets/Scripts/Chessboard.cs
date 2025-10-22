@@ -11,16 +11,17 @@ public class Chessboard : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GenerateBoard();
+        //GenerateBoard();
     }
 
-    void GenerateBoard()
+    public void GenerateBoard()
     {
+        Debug.Log("Generating Chessboard...");
         for (int x = 0; x < 8; x++)
         {
             for (int y = 0; y < 8; y++)
             {
-                Vector3 position = new Vector3((x - 3.5f) * tileSize, (y - 3.5f) * tileSize, 0);
+                Vector2 position = new Vector2((x - 3.5f) * tileSize, (y - 3.5f) * tileSize);
 
                 GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, boardParent);
                 tile.name = $"Tile_{x}_{y}";

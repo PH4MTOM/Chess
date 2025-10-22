@@ -5,12 +5,12 @@ public class Rook : ChessPiece
 {
     public Sprite whiteRookSprite;
     public Sprite blackRookSprite;
-    public override void Move(Vector3 newPosition)
+    public override void Move(Vector2 newPosition)
     {
         throw new System.NotImplementedException();
     }
 
-    public override List<Vector3> GetPossibleMoves()
+    public override List<Vector2> GetPossibleMoves()
     {
         throw new System.NotImplementedException();
     }
@@ -19,6 +19,7 @@ public class Rook : ChessPiece
     void Start()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        BoxCollider2D bc = GetComponent<BoxCollider2D>();
         if (PieceColor == Color.White)
         {
             sr.sprite = whiteRookSprite;
@@ -26,6 +27,13 @@ public class Rook : ChessPiece
         else
         {
             sr.sprite = blackRookSprite;
+        }
+
+        if (sr.sprite != null)
+        {
+            Vector2 size = sr.sprite.bounds.size;
+            bc.size = size;
+            bc.offset = sr.sprite.bounds.center;
         }
     }
 
