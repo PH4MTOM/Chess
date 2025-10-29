@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,16 +7,27 @@ public class GameController : MonoBehaviour
     public Chessboard board;
     public ChessPieces pieces;
     private ChessPiece selectedPiece;
+    private Dictionary<(int, int), Vector2> coordsTranslationMap;
+    public Dictionary<(int, int), Vector2> CoordsTranslationMap
+    {
+        get { return coordsTranslationMap; }
+    }
+    public Dictionary<(int, int), ChessPiece> pieceCoordsMap;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         board.GenerateBoard();
-        pieces.GeneratePieces();
+        pieceCoordsMap = pieces.GeneratePieces();
+        GeneratePixelPosTable();
+        Debug.Log(pieceCoordsMap[(0,1)].PieceName);
+        Debug.Log(pieceCoordsMap[(0,2)]);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log(coordsTranslationMap[(0, 0)]);
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -46,12 +58,23 @@ public class GameController : MonoBehaviour
         selectedPiece = piece;
         selectedPiece.Select();
         Debug.Log($"Current PixelPos: {selectedPiece.transform.position.ToString()}, Current TilePos: {selectedPiece.CurrentTilePosition.ToString()}");
-        foreach(ChessPiece.MoveData item in selectedPiece.GetPossibleMoves())
+    }
+
+    // Generate lookup table to translate tile positions to pixel positions
+    private void GeneratePixelPosTable()
+    {
+        float tileSize = 1.28f;
+        float offset = tileSize * 3.5f;
+
+        coordsTranslationMap = new Dictionary<(int, int), Vector2>();
+
+        for (int x = 0; x < 8; x++)
         {
-            Debug.Log($"Pixel: {item.pixelPos}, Tile: {item.tilePos}");
+            for (int y = 0; y < 8; y++)
+            {
+                Vector2 pixelPos = new Vector2((x * tileSize) - offset, (y * tileSize) - offset);
+                coordsTranslationMap.Add((x, y), pixelPos);
+            }
         }
-        // Moving a piece to a new area
-        ChessPiece.MoveData firstmove = selectedPiece.GetPossibleMoves()[0];
-        selectedPiece.Move(firstmove.pixelPos, firstmove.tilePos);
     }
 }

@@ -6,7 +6,7 @@ public class Rook : ChessPiece
     public Sprite whiteRookSprite;
     public Sprite blackRookSprite;
 
-    public override List<MoveData> GetPossibleMoves()
+    public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
         throw new System.NotImplementedException();
     }

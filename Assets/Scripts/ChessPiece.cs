@@ -9,7 +9,7 @@ public abstract class ChessPiece : MonoBehaviour
     public string PieceName { get; protected set; }
     public bool HasMoved { get; protected set; } = false; // Useful for pawns and castling
     public bool IsCaptured { get; protected set; } = false;
-    public abstract List<MoveData> GetPossibleMoves();
+    public abstract List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap);
     public (int, int) CurrentTilePosition;
 
     public struct MoveData
@@ -40,19 +40,6 @@ public abstract class ChessPiece : MonoBehaviour
     public void Deselect()
     {
         Debug.Log($"{PieceName} deselected.");
-    }
-    // Translate from tile cords to pixel cords
-    public Vector2 TranslateTileposToPixelpos(int x, int y)
-    {
-        float tileSize = 1.28f;
-        float offset = tileSize * 3.5f;
-
-        int newX = CurrentTilePosition.Item1 + x;
-        int newY = CurrentTilePosition.Item2 + y;
-
-        Vector2 newPixelPos = new Vector2((newX * tileSize) - offset, (newY * tileSize) - offset);
-
-        return newPixelPos;
     }
     public void Move(Vector2 pixelPos, (int, int) tilePos)
     {

@@ -6,7 +6,7 @@ public class Bishop : ChessPiece
     public Sprite whiteBishopSprite;
     public Sprite blackBishopSprite;
 
-    public override List<MoveData> GetPossibleMoves()
+    public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
         throw new System.NotImplementedException();
     }

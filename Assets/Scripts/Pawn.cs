@@ -1,50 +1,110 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Pawn : ChessPiece
 {
     public Sprite whitePawnSprite;
     public Sprite blackPawnSprite;
 
-    public override List<MoveData> GetPossibleMoves()
+    public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
-        List<MoveData> moves = new List<MoveData>();
+        var possibleMoves = new List<(int, int)> { };
+        var prePossibleMoves = new List<(int, int)> { };
 
-        if (PieceColor == Color.White)
+        void CheckAndAddMove(List<(int, int)> possibleTile)
         {
-            // Move 1 step forward
-            moves.Add(new MoveData(TranslateTileposToPixelpos(0, 1), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 + 1)));
-
-            // Move 2 steps if coming from it starting position
-            if (CurrentTilePosition.Item2 == 1)
+            foreach ((int, int) posTile in possibleTile)
             {
-                moves.Add(new MoveData(TranslateTileposToPixelpos(0, 2), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 + 2)));
+                var piece = pieceCoordsMap[posTile];
+                if (posTile.Item1 != CurrentTilePosition.Item1)
+                {
+                    // Checking diagonally
+                    if (piece != null)
+                    {
+                        if (piece.PieceColor != PieceColor)
+                        {
+                            possibleMoves.Add(posTile);
+                        }
+                    }
+                }
+                else if (piece == null)
+                {
+                    possibleMoves.Add(posTile);
+                }
             }
+        }
 
-            // Move up and right
-            moves.Add(new MoveData(TranslateTileposToPixelpos(1, 1), (CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 + 1)));
+        if (PieceColor == Color.White) 
+        {
+            if (!HasMoved) 
+            {
+                // Add diagonal moves
+                prePossibleMoves.Add((CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 + 1));
+                prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 + 1));
 
-            // Move up and left
-            moves.Add(new MoveData(TranslateTileposToPixelpos(-1, 1), (CurrentTilePosition.Item1  - 1, CurrentTilePosition.Item2 + 1)));
-        } 
+                // Add starting moves
+                for (int y = 1; y < 3; y++)
+                {
+                    if (pieceCoordsMap[(CurrentTilePosition.Item1, CurrentTilePosition.Item2 + y)] != null) 
+                    {
+                        break;
+                    } 
+                    else 
+                    {
+                        prePossibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 + y));
+                    }
+                }
+
+                CheckAndAddMove(prePossibleMoves);
+            }
+            else
+            {
+                // Add diagonal moves
+                prePossibleMoves.Add((CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 + 1));
+                prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 + 1));
+
+                // Check if there is any piece infront of the pawn
+                prePossibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 + 1));
+                CheckAndAddMove(prePossibleMoves);
+            }
+        }
         else
         {
-            // Move 1 step forward
-            moves.Add(new MoveData(TranslateTileposToPixelpos(0, -1), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 - 1)));
-
-            // Move 2 steps if coming from it starting position
-            if (CurrentTilePosition.Item2 == 6)
+            if (!HasMoved)
             {
-                moves.Add(new MoveData(TranslateTileposToPixelpos(0, -2), (CurrentTilePosition.Item1, CurrentTilePosition.Item2 - 2)));
+                // Add diagonal moves
+                prePossibleMoves.Add((CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 - 1));
+                prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 - 1));
+
+                // Starting Move
+                for (int y = 1; y < 3; y--)
+                {
+                    if (pieceCoordsMap[(CurrentTilePosition.Item1, CurrentTilePosition.Item2 - y)] != null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        prePossibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 - y));
+                    }
+                }
+
+                CheckAndAddMove(prePossibleMoves);
             }
+            else
+            {
+                // Add diagonal moves
+                prePossibleMoves.Add((CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 - 1));
+                prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 - 1));
 
-            // Move up and right
-            moves.Add(new MoveData(TranslateTileposToPixelpos(-1, -1), (CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 -1)));
-
-            // Move up and left
-            moves.Add(new MoveData(TranslateTileposToPixelpos(1, -1), (CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 - 1)));
+                // Check if there is any piece infront of the pawn
+                prePossibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 - 1));
+                CheckAndAddMove(prePossibleMoves);
+            }
         }
-        return moves;
+
+        return possibleMoves;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

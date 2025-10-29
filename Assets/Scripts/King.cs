@@ -6,10 +6,11 @@ public class King : ChessPiece
     public Sprite whiteKingSprite;
     public Sprite blackKingSprite;
 
-    public override List<MoveData> GetPossibleMoves()
+    public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
         throw new System.NotImplementedException();
     }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
