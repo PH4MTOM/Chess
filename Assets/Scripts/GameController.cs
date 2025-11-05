@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ public class GameController : MonoBehaviour
     public Chessboard board;
     public ChessPieces pieces;
     private ChessPiece selectedPiece;
+    public GameObject MoveIndicatorPreFab;
+    public Transform parent;
     private Dictionary<(int, int), Vector2> coordsTranslationMap;
     public Dictionary<(int, int), Vector2> CoordsTranslationMap
     {
@@ -39,8 +42,14 @@ public class GameController : MonoBehaviour
             if (hit.collider != null)
             {
                 ChessPiece piece = hit.collider.GetComponent<ChessPiece>();
+                //Indicator ko = hit.collider.GetComponent<Indicator>();
 
                 Debug.Log("Ray hit!");
+
+                //if (ko != null)
+                //{
+                //    ko.Selected();
+                //}
 
                 if (piece != null)
                 {
@@ -58,6 +67,14 @@ public class GameController : MonoBehaviour
         selectedPiece = piece;
         selectedPiece.Select();
         Debug.Log($"Current PixelPos: {selectedPiece.transform.position.ToString()}, Current TilePos: {selectedPiece.CurrentTilePosition.ToString()}");
+        
+        //List<(int, int)> moves = selectedPiece.GetPossibleMoves(pieceCoordsMap);
+        foreach ((int, int) item in selectedPiece.GetPossibleMoves(pieceCoordsMap))
+        {
+            Debug.Log(item);
+            GameObject indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
+            indicator.name = $"Indicator_{item}";
+        }
     }
 
     // Generate lookup table to translate tile positions to pixel positions

@@ -335,6 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   board: {fileID: 239518190}
   pieces: {fileID: 2105403535}
+  MoveIndicatorPreFab: {fileID: 8026202199686268190, guid: c90933318619f9a49bcae1b70038775d, type: 3}
 --- !u!4 &1093085559
 Transform:
   m_ObjectHideFlags: 0

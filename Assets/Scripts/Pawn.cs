@@ -16,21 +16,25 @@ public class Pawn : ChessPiece
         {
             foreach ((int, int) posTile in possibleTile)
             {
-                var piece = pieceCoordsMap[posTile];
-                if (posTile.Item1 != CurrentTilePosition.Item1)
+                // The boundaries of the board.
+                if (posTile.Item1 >= 0 && posTile.Item1 <= 7 && posTile.Item2 >= 0 && posTile.Item2 <= 7)
                 {
-                    // Checking diagonally
-                    if (piece != null)
+                    var piece = pieceCoordsMap[posTile];
+                    if (posTile.Item1 != CurrentTilePosition.Item1)
                     {
-                        if (piece.PieceColor != PieceColor)
+                        // Checking diagonally.
+                        if (piece != null)
                         {
-                            possibleMoves.Add(posTile);
+                            if (piece.PieceColor != PieceColor)
+                            {
+                                possibleMoves.Add(posTile);
+                            }
                         }
                     }
-                }
-                else if (piece == null)
-                {
-                    possibleMoves.Add(posTile);
+                    else if (piece == null)
+                    {
+                        possibleMoves.Add(posTile);
+                    }
                 }
             }
         }
@@ -78,7 +82,7 @@ public class Pawn : ChessPiece
                 prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 - 1));
 
                 // Starting Move
-                for (int y = 1; y < 3; y--)
+                for (int y = 1; y < 3; y++)
                 {
                     if (pieceCoordsMap[(CurrentTilePosition.Item1, CurrentTilePosition.Item2 - y)] != null)
                     {
