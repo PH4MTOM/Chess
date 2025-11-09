@@ -12,19 +12,6 @@ public abstract class ChessPiece : MonoBehaviour
     public abstract List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap);
     public (int, int) CurrentTilePosition;
 
-    public struct MoveData
-    {
-        public Vector2 pixelPos;
-        public (int, int) tilePos;
-
-        public MoveData(Vector2 posA, (int, int) posB)
-        {
-            pixelPos = posA;
-            tilePos = posB;            
-        }
-    }
-
-    // Vector2 startPosition,
     public void Init(string name, Color color, (int, int) tilePosition)
     {
         PieceName = name;
@@ -45,5 +32,6 @@ public abstract class ChessPiece : MonoBehaviour
     {
         gameObject.transform.position = pixelPos;
         CurrentTilePosition = tilePos;
+        HasMoved = true;
     }
 }

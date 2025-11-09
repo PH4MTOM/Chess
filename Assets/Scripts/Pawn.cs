@@ -119,11 +119,13 @@ public class Pawn : ChessPiece
         if (PieceColor == Color.White)
         {
             sr.sprite = whitePawnSprite;
-        } else
+        } 
+        else
         {
             sr.sprite = blackPawnSprite;
         }
 
+        // Scales the boxcollider with the sprite size
         if (sr.sprite != null)
         {
             Vector2 size = sr.sprite.bounds.size;

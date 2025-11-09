@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class GameController : MonoBehaviour
     public Chessboard board;
     public ChessPieces pieces;
     private ChessPiece selectedPiece;
-    public GameObject MoveIndicatorPreFab;
+    public Indicator MoveIndicatorPreFab;
     public Transform parent;
     private Dictionary<(int, int), Vector2> coordsTranslationMap;
     public Dictionary<(int, int), Vector2> CoordsTranslationMap
@@ -16,6 +17,11 @@ public class GameController : MonoBehaviour
         get { return coordsTranslationMap; }
     }
     public Dictionary<(int, int), ChessPiece> pieceCoordsMap;
+    private List<Indicator> activeIndicators = new List<Indicator>();
+    public ChessPiece lastSelectedPiece;
+    public Boolean isWhiteTurn = true;
+    public Boolean isWhiteKingChecked = false;
+    public Boolean isBlackKingChecked = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,8 +29,6 @@ public class GameController : MonoBehaviour
         board.GenerateBoard();
         pieceCoordsMap = pieces.GeneratePieces();
         GeneratePixelPosTable();
-        Debug.Log(pieceCoordsMap[(0,1)].PieceName);
-        Debug.Log(pieceCoordsMap[(0,2)]);
     }
 
     // Update is called once per frame
@@ -33,49 +37,147 @@ public class GameController : MonoBehaviour
         // Debug.Log(coordsTranslationMap[(0, 0)]);
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
+            // Creating a hitCollider to detect what object the mouse is clicking
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+            Collider2D[] hits = Physics2D.OverlapPointAll(mouseWorldPos);
+
+            Collider2D selectedCollider = null;
+
+            // Prioritize the hit on indicators
+            foreach (Collider2D hit in hits)
+            {
+                if (hit.GetComponent<Indicator>() != null)
+                {
+                    selectedCollider = hit;
+                    break;
+                }
+                else if (selectedCollider == null && hit.GetComponent<ChessPiece>() != null)
+                {
+                    selectedCollider = hit;
+                }
+            }
 
             Debug.Log(Mouse.current.position.ReadValue());
-            Debug.Log("Mouse Clicked");
+            Debug.Log("Mouse Clicked!");
+            ChessPiece piece = null;            
 
-            if (hit.collider != null)
+            if (selectedCollider != null)
             {
-                ChessPiece piece = hit.collider.GetComponent<ChessPiece>();
-                //Indicator ko = hit.collider.GetComponent<Indicator>();
+                Indicator indicator = selectedCollider.GetComponent<Indicator>();
+                piece = selectedCollider.GetComponent<ChessPiece>();
 
-                Debug.Log("Ray hit!");
+                Debug.Log("hitCollider collided!");
 
-                //if (ko != null)
-                //{
-                //    ko.Selected();
-                //}
-
-                if (piece != null)
+                // Click on a move indicator
+                if (indicator != null)
                 {
-                    SelectPiece(piece);
-                }
+                    Debug.Log("Indicator have been clicked!");
+                    Debug.Log(lastSelectedPiece);
+                    MovePiece(lastSelectedPiece, indicator);
+                    changeTurn();
+                    checkForCheck();
+                    RemoveAllIndicators();                    
+                } 
+                else if (piece != null)
+                {
+                    RemoveAllIndicators();
+                    lastSelectedPiece = piece;
+                    SelectPiece(piece);                   
+                } 
+                else
+                {
+                    RemoveAllIndicators();
+                }           
+            }
+            else
+            {
+                RemoveAllIndicators();
             }
         }   
     }
 
-    void SelectPiece(ChessPiece piece)
+    void changeTurn()
     {
-        if (selectedPiece != null)
-            selectedPiece.Deselect();
-
-        selectedPiece = piece;
-        selectedPiece.Select();
-        Debug.Log($"Current PixelPos: {selectedPiece.transform.position.ToString()}, Current TilePos: {selectedPiece.CurrentTilePosition.ToString()}");
-        
-        //List<(int, int)> moves = selectedPiece.GetPossibleMoves(pieceCoordsMap);
-        foreach ((int, int) item in selectedPiece.GetPossibleMoves(pieceCoordsMap))
+        if (isWhiteTurn)
         {
-            Debug.Log(item);
-            GameObject indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
-            indicator.name = $"Indicator_{item}";
+            isWhiteTurn = false;
+        }
+        else
+        {
+            isWhiteTurn = true;
         }
     }
+
+    void checkForCheck()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void RemoveAllIndicators()
+    {
+        for (int i = activeIndicators.Count - 1; i >= 0; i--)
+        {
+            Destroy(activeIndicators[i].gameObject);
+        }
+        activeIndicators.Clear();
+    }
+
+    void SelectPiece(ChessPiece piece)
+    {
+        selectedPiece = piece;          
+        selectedPiece.Select();
+
+        if (piece.PieceColor == ChessPiece.Color.White && isWhiteTurn)
+        {
+            Debug.Log($"Current PixelPos: {selectedPiece.transform.position.ToString()}, Current TilePos: {selectedPiece.CurrentTilePosition.ToString()}");          
+
+            foreach ((int, int) item in selectedPiece.GetPossibleMoves(pieceCoordsMap))
+            {
+                Debug.Log(item);
+                Indicator indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
+                indicator.Init(item);
+                activeIndicators.Add(indicator);
+                indicator.name = $"Indicator_{item}";
+            }
+        }
+        else if (piece.PieceColor == ChessPiece.Color.Black && !isWhiteTurn)
+        {
+            Debug.Log($"Current PixelPos: {selectedPiece.transform.position.ToString()}, Current TilePos: {selectedPiece.CurrentTilePosition.ToString()}");            
+            
+            foreach ((int, int) item in selectedPiece.GetPossibleMoves(pieceCoordsMap))
+            {
+                Debug.Log(item);
+                Indicator indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
+                indicator.Init(item);
+                activeIndicators.Add(indicator);
+                indicator.name = $"Indicator_{item}";
+            }
+        } 
+        else
+        {
+            Debug.Log("Turn-handling went wrong!!!");
+        }
+    }
+
+    void MovePiece(ChessPiece piece, Indicator indicator)
+    {
+        Debug.Log($"Current PixelPos of lastSelectedPiece: {piece.transform.position.ToString()}, Current TilePos: {piece.CurrentTilePosition.ToString()}");
+        Debug.Log($"Current PixelPos of indicator: {indicator.transform.position.ToString()}, Current TilePos: {indicator.CurrentTilePosition.ToString()}");
+
+        if (pieceCoordsMap[indicator.CurrentTilePosition] != null) // Enemy piece on indicator position
+        {
+            Debug.Log($"Captured {pieceCoordsMap[indicator.CurrentTilePosition].PieceName}");
+            Destroy(pieceCoordsMap[indicator.CurrentTilePosition].gameObject); // Remove enemy piece
+        }
+
+        pieceCoordsMap[piece.CurrentTilePosition] = null;
+        piece.Move(indicator.transform.position, indicator.CurrentTilePosition);
+        pieceCoordsMap[indicator.CurrentTilePosition] = piece;
+        Debug.Log("Piece has been moved!");
+        RemoveAllIndicators();
+        Debug.Log("Indicators has been removed!");
+    }
+
 
     // Generate lookup table to translate tile positions to pixel positions
     private void GeneratePixelPosTable()

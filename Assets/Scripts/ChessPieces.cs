@@ -61,6 +61,7 @@ public class ChessPieces : MonoBehaviour
             blackPiece.Init(name: $"Black{pieceSpawnSequence[x]}_{x}_7", color: ChessPiece.Color.Black, tilePosition: (x, 7));
             initPieceCoordsMap.Add((x, 7), blackPiece);
 
+            // Adding all the empty tiles to the initial piece coordination map
             for (int y = 2; y < 6; y++)
             {
                 initPieceCoordsMap.Add((x, y), null);
