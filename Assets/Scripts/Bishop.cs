@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Bishop : ChessPiece
 {
@@ -8,7 +9,10 @@ public class Bishop : ChessPiece
 
     public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
-        throw new System.NotImplementedException();
+        var possibleMoves = new List<(int, int)> { };
+        var prePossibleMoves = new List<(int, int)> { };
+
+        throw new NotImplementedException();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
