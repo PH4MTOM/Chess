@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -9,90 +10,122 @@ public class Rook : ChessPiece
 
     public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
-        var possibleMoves = new List<(int, int)> { };        
+        var possibleMoves = new List<(int, int)> { };
 
-        // Adds all tiles left of the rook
-        for (int x = CurrentTilePosition.Item1 - 1; x >= 0; x--)
+        bool leftBlocked = false;
+        bool rightBlocked = false;
+        bool topBlocked = false;
+        bool bottomBlocked = false;
+
+        for (int i = 1; i <= 7; i++)
         {
-            var piece = pieceCoordsMap[(x, CurrentTilePosition.Item2)];
-            if (piece != null)
+            // Left moves
+            if (CurrentTilePosition.Item1 - i >= 0 && CurrentTilePosition.Item1 - i <= 7 && CurrentTilePosition.Item2 >= 0 && CurrentTilePosition.Item2 <= 7)
             {
-                if (piece.PieceColor != PieceColor)
+                var leftPiece = pieceCoordsMap[(CurrentTilePosition.Item1 - i, CurrentTilePosition.Item2)];
+                if (leftPiece != null && !leftBlocked)
                 {
-                    possibleMoves.Add((x, CurrentTilePosition.Item2));
-                    break;
-                } 
-                else
+                    if (leftPiece.PieceColor != PieceColor)
+                    {
+                        possibleMoves.Add((CurrentTilePosition.Item1 - i, CurrentTilePosition.Item2));
+                        leftBlocked = true;
+                    }
+                    else
+                    {
+                        leftBlocked = true;
+                    }
+                }
+                else if (!leftBlocked)
                 {
-                    break;
+                    possibleMoves.Add((CurrentTilePosition.Item1 - i, CurrentTilePosition.Item2));
                 }
             }
             else
             {
-                possibleMoves.Add((x, CurrentTilePosition.Item2));
+                leftBlocked = true;
             }
-        }
-        // Adds all tiles right of the rook
-        for (int x = CurrentTilePosition.Item1 + 1; x <= 7; x++)
-        {
-            var piece = pieceCoordsMap[(x, CurrentTilePosition.Item2)];
-            if (piece != null)
+
+            // Top moves
+            if (CurrentTilePosition.Item1 >= 0 && CurrentTilePosition.Item1 <= 7 && CurrentTilePosition.Item2 + i >= 0 && CurrentTilePosition.Item2 + i <= 7)
             {
-                if (piece.PieceColor != PieceColor)
+                var topPiece = pieceCoordsMap[(CurrentTilePosition.Item1, CurrentTilePosition.Item2 + i)];
+                if (topPiece != null && !topBlocked)
                 {
-                    possibleMoves.Add((x, CurrentTilePosition.Item2));
-                    break;
+                    if (topPiece.PieceColor != PieceColor)
+                    {
+                        possibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 + i));
+                        topBlocked = true;
+                    }
+                    else
+                    {
+                        topBlocked = true;
+                    }
                 }
-                else
+                else if (!topBlocked)
                 {
-                    break;
-                }
-            }
-            else
-            {
-                possibleMoves.Add((x, CurrentTilePosition.Item2));
-            }
-        }
-        // Adds all tiles downward of the rook
-        for (int y = CurrentTilePosition.Item2 - 1; y >= 0; y--)
-        {
-            var piece = pieceCoordsMap[(CurrentTilePosition.Item1, y)];
-            if (piece != null)
-            {
-                if (piece.PieceColor != PieceColor)
-                {
-                    possibleMoves.Add((CurrentTilePosition.Item1, y));
-                    break;
-                }
-                else
-                {
-                    break;
+                    possibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 + i));
                 }
             }
             else
             {
-                possibleMoves.Add((CurrentTilePosition.Item1, y));
+                topBlocked = true;
             }
-        }
-        // Adds all tiles upward of the rook
-        for (int y = CurrentTilePosition.Item2 + 1; y <= 7; y++)
-        {
-            var piece = pieceCoordsMap[(CurrentTilePosition.Item1, y)];
-            if (piece != null)
+
+            // Right moves
+            if (CurrentTilePosition.Item1 + i >= 0 && CurrentTilePosition.Item1 + i <= 7 && CurrentTilePosition.Item2 >= 0 && CurrentTilePosition.Item2 <= 7)
             {
-                if (piece.PieceColor != PieceColor)
+                var rightPiece = pieceCoordsMap[(CurrentTilePosition.Item1 + i, CurrentTilePosition.Item2)];
+                if (rightPiece != null && !rightBlocked)
                 {
-                    possibleMoves.Add((CurrentTilePosition.Item1, y));
-                    break;
+                    if (rightPiece.PieceColor != PieceColor)
+                    {
+                        possibleMoves.Add((CurrentTilePosition.Item1 + i, CurrentTilePosition.Item2));
+                        rightBlocked = true;
+                    }
+                    else
+                    {
+                        rightBlocked = true;
+                    }
                 }
-                else
+                else if (!rightBlocked)
                 {
-                    break;
+                    possibleMoves.Add((CurrentTilePosition.Item1 + i, CurrentTilePosition.Item2));
                 }
             }
             else
             {
-                possibleMoves.Add((CurrentTilePosition.Item1, y));
+                rightBlocked = true;
+            }
+
+            // Bottom moves
+            if (CurrentTilePosition.Item1 >= 0 && CurrentTilePosition.Item1 <= 7 && CurrentTilePosition.Item2 - i >= 0 && CurrentTilePosition.Item2 - i <= 7)
+            {
+                var bottomPiece = pieceCoordsMap[(CurrentTilePosition.Item1, CurrentTilePosition.Item2 - i)];
+                if (bottomPiece != null && !bottomBlocked)
+                {
+                    if (bottomPiece.PieceColor != PieceColor)
+                    {
+                        possibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 - i));
+                        bottomBlocked = true;
+                    }
+                    else
+                    {
+                        bottomBlocked = true;
+                    }
+                }
+                else if (!bottomBlocked)
+                {
+                    possibleMoves.Add((CurrentTilePosition.Item1, CurrentTilePosition.Item2 - i));
+                }
+            }
+            else
+            {
+                bottomBlocked = true;
+            }
+
+            if (leftBlocked && topBlocked && rightBlocked && bottomBlocked)
+            {
+                break;
             }
         }
 
