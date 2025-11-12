@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,12 +17,14 @@ public class GameController : MonoBehaviour
     {
         get { return coordsTranslationMap; }
     }
-    public Dictionary<(int, int), ChessPiece> pieceCoordsMap;
+    public Dictionary<(int, int), ChessPiece?> pieceCoordsMap;
     private List<Indicator> activeIndicators = new List<Indicator>();
     public ChessPiece lastSelectedPiece;
     public Boolean isWhiteTurn = true;
     public Boolean isWhiteKingChecked = false;
     public Boolean isBlackKingChecked = false;
+    public (int, int) whiteKingTilePos = (4,0);
+    public (int, int) blackKingTilePos = (4,7);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -122,8 +125,49 @@ public class GameController : MonoBehaviour
         activeIndicators.Clear();
     }
 
+    Boolean IsChecked(Dictionary<(int, int), ChessPiece?> tempPieceCoordsMap, (int, int) kingTilePosition)
+    {
+        var tempMoves = new List<(int, int)> { };
+
+        foreach (KeyValuePair<(int, int), ChessPiece?> entry in tempPieceCoordsMap)
+        {
+            if (entry.Value != null)
+            {
+                if (isWhiteTurn && entry.Value.PieceColor == ChessPiece.Color.Black)
+                {                    
+                    tempMoves = entry.Value.GetPossibleMoves(tempPieceCoordsMap);
+
+                    if (tempMoves.Contains(kingTilePosition))
+                    {
+                        Debug.Log("THERE IS A KING!!!");
+                        return true;
+                    }
+                }
+                else if (!isWhiteTurn && entry.Value.PieceColor == ChessPiece.Color.White)
+                {
+                    
+                    tempMoves = entry.Value.GetPossibleMoves(tempPieceCoordsMap);
+
+                    if (tempMoves.Contains(kingTilePosition))
+                    {
+                        Debug.Log("THERE IS A KING!!!");
+                        return true;
+                    }
+                }
+            }                
+            else
+            {
+                //Debug.Log("Entry value is null.");
+            }
+        }
+        Debug.Log("THERE IS NO KING!!!");
+        return false;
+    }
+
     void SelectPiece(ChessPiece piece)
     {
+        
+
         selectedPiece = piece;          
         selectedPiece.Select();
 
@@ -134,6 +178,17 @@ public class GameController : MonoBehaviour
             foreach ((int, int) item in selectedPiece.GetPossibleMoves(pieceCoordsMap))
             {
                 Debug.Log(item);
+
+                var tempPieceCoordsMap = new Dictionary<(int, int), ChessPiece?>(pieceCoordsMap);
+                tempPieceCoordsMap[piece.CurrentTilePosition] = null;
+                tempPieceCoordsMap[item] = piece;
+
+                // Check if white king will be checked by moving this piece (i.e. an illegal move)
+                if (IsChecked(tempPieceCoordsMap, whiteKingTilePos))
+                {
+                    break;
+                }                
+
                 Indicator indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
                 indicator.Init(item);
                 activeIndicators.Add(indicator);
@@ -147,6 +202,17 @@ public class GameController : MonoBehaviour
             foreach ((int, int) item in selectedPiece.GetPossibleMoves(pieceCoordsMap))
             {
                 Debug.Log(item);
+
+                var tempPieceCoordsMap = new Dictionary<(int, int), ChessPiece?>(pieceCoordsMap);
+                tempPieceCoordsMap[piece.CurrentTilePosition] = null;
+                tempPieceCoordsMap[item] = piece;
+
+                // Check if white king will be checked by moving this piece (i.e. an illegal move)
+                if (IsChecked(tempPieceCoordsMap, blackKingTilePos))
+                {
+                    break;
+                }                
+
                 Indicator indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
                 indicator.Init(item);
                 activeIndicators.Add(indicator);
@@ -173,6 +239,16 @@ public class GameController : MonoBehaviour
         pieceCoordsMap[piece.CurrentTilePosition] = null;
         piece.Move(indicator.transform.position, indicator.CurrentTilePosition);
         pieceCoordsMap[indicator.CurrentTilePosition] = piece;
+
+        if (piece is King && piece.PieceColor == ChessPiece.Color.White)
+        {
+            whiteKingTilePos = piece.CurrentTilePosition;
+        }
+        else if (piece is King && piece.PieceColor == ChessPiece.Color.Black)
+        {
+            blackKingTilePos = piece.CurrentTilePosition;
+        }
+
         Debug.Log("Piece has been moved!");
         RemoveAllIndicators();
         Debug.Log("Indicators has been removed!");
