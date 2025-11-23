@@ -111,9 +111,42 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void checkForCheck()
+    Boolean checkForCheck(Dictionary<(int, int), ChessPiece?> pieceCoordsMap, (int, int) kingTilePosition)
     {
-        throw new System.NotImplementedException();
+        var tempMoves = new List<(int, int)> { };
+        var moves = new List<(int, int)> { };
+
+        foreach (KeyValuePair<(int, int), ChessPiece?> entry in pieceCoordsMap)
+        {
+            if (entry.Value != null)
+            {
+                if (isWhiteTurn)
+                {
+                    tempMoves = entry.Value.GetPossibleMoves(pieceCoordsMap);
+
+                    if (tempMoves.Contains(kingTilePosition))
+                    {
+                        Debug.Log("THERE IS A KING!!!");
+                    }
+                }
+                else if (!isWhiteTurn)
+                {
+                    tempMoves = entry.Value.GetPossibleMoves(pieceCoordsMap);
+
+                    if (tempMoves.Contains(kingTilePosition))
+                    {
+                        Debug.Log("THERE IS A KING!!!");                        
+                    }
+                }
+            }
+            else
+            {
+                //Debug.Log("Entry value is null.");
+            }
+        }
+        Debug.Log("THERE IS NO KING!!!");
+
+        return false;
     }
 
     void RemoveAllIndicators()
@@ -165,9 +198,7 @@ public class GameController : MonoBehaviour
     }
 
     void SelectPiece(ChessPiece piece)
-    {
-        
-
+    {      
         selectedPiece = piece;          
         selectedPiece.Select();
 
@@ -183,11 +214,21 @@ public class GameController : MonoBehaviour
                 tempPieceCoordsMap[piece.CurrentTilePosition] = null;
                 tempPieceCoordsMap[item] = piece;
 
-                // Check if white king will be checked by moving this piece (i.e. an illegal move)
-                if (IsChecked(tempPieceCoordsMap, whiteKingTilePos))
+                if (piece is King)
                 {
-                    break;
-                }                
+                    (int, int) tempWhiteKingTilePos = item;
+                    if (IsChecked(tempPieceCoordsMap, tempWhiteKingTilePos))
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    if (IsChecked(tempPieceCoordsMap, whiteKingTilePos))
+                    {
+                        break;
+                    }                    
+                }              
 
                 Indicator indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
                 indicator.Init(item);
@@ -207,11 +248,22 @@ public class GameController : MonoBehaviour
                 tempPieceCoordsMap[piece.CurrentTilePosition] = null;
                 tempPieceCoordsMap[item] = piece;
 
-                // Check if white king will be checked by moving this piece (i.e. an illegal move)
-                if (IsChecked(tempPieceCoordsMap, blackKingTilePos))
+                // Check if black king will be checked by moving this piece (i.e. an illegal move)
+                if (piece is King)
                 {
-                    break;
-                }                
+                    (int, int) tempBlackKingTilePos = item;
+                    if (IsChecked(tempPieceCoordsMap, tempBlackKingTilePos))
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (IsChecked(tempPieceCoordsMap, blackKingTilePos))
+                    {
+                        continue;
+                    }
+                }
 
                 Indicator indicator = Instantiate(MoveIndicatorPreFab, coordsTranslationMap[item], Quaternion.identity, parent);
                 indicator.Init(item);
