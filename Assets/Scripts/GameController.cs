@@ -78,14 +78,14 @@ public class GameController : MonoBehaviour
                     Debug.Log("Indicator have been clicked!");
                     Debug.Log(lastSelectedPiece);
                     MovePiece(lastSelectedPiece, indicator);
+                    changeTurn();
                     if (isCheckmate(pieceCoordsMap))
                     {
                         Debug.Log("CHECKMAAAAAAAATE");
                     }
                     else
                     {
-                        Debug.Log("No CheckMate. Change Turn");
-                        changeTurn();
+                        Debug.Log("No CheckMate.");                        
                     }
                     RemoveAllIndicators();                    
                 } 
@@ -127,19 +127,33 @@ public class GameController : MonoBehaviour
         {
             if (entry.Value != null)
             {
-                if (!isWhiteTurn && entry.Value.PieceColor == ChessPiece.Color.White)
+                if (isWhiteTurn && entry.Value.PieceColor == ChessPiece.Color.White)
                 {
                     filteredMoves = filterMoves(pieceCoordsMap, entry.Value);
-                    if (filteredMoves.Count() < 1)
+
+                    Debug.Log($"Current Piece: {entry.Value}");
+                    Debug.Log("White filteredMoves:");
+                    foreach (var item in filteredMoves)
+                    {
+                        Debug.Log($"FilteredMoves: {item.Item1}, {item.Item2}");
+                    }
+                    if (filteredMoves.Count() > 1)
                     {
                         return false;
                     }
                 }
 
-                if (isWhiteTurn && entry.Value.PieceColor == ChessPiece.Color.Black)
+                if (!isWhiteTurn && entry.Value.PieceColor == ChessPiece.Color.Black)
                 {
                     filteredMoves = filterMoves(pieceCoordsMap, entry.Value);
-                    if (filteredMoves.Count() < 1)
+
+                    Debug.Log($"Current Piece: {entry.Value}");
+                    Debug.Log("Black filteredMoves:");
+                    foreach (var item in filteredMoves)
+                    {
+                        Debug.Log($"FilteredMoves: {item.Item1}, {item.Item2}");
+                    }
+                    if (filteredMoves.Count() > 1)
                     {
                         return false;
                     }
@@ -209,7 +223,7 @@ public class GameController : MonoBehaviour
 
             if (piece.PieceColor == ChessPiece.Color.White)
             {
-             if (piece is King)
+                if (piece is King)
                 {
                     (int, int) tempWhiteKingTilePos = item;
                     if (IsChecked(tempPieceCoordsMap, tempWhiteKingTilePos))
