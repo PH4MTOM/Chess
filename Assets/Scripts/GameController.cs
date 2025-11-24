@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
@@ -10,6 +12,8 @@ public class GameController : MonoBehaviour
 {
     public Chessboard board;
     public ChessPieces pieces;
+    public GameObject gameOverPanel;
+    public Text winnerText;
     private ChessPiece selectedPiece;
     public Indicator MoveIndicatorPreFab;
     public Transform parent;
@@ -82,6 +86,7 @@ public class GameController : MonoBehaviour
                     if (isCheckmate(pieceCoordsMap))
                     {
                         Debug.Log("CHECKMAAAAAAAATE");
+                        GameOver();
                     }
                     else
                     {
@@ -105,6 +110,24 @@ public class GameController : MonoBehaviour
                 RemoveAllIndicators();
             }
         }   
+    }
+
+    public void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+        if (isWhiteTurn)
+        {
+            winnerText.text = "Checkmate!!! Black Won!";
+        }
+        else
+        {
+            winnerText.text = "Checkmate!!! White Won!";
+        }        
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void changeTurn()
