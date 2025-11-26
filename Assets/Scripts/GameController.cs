@@ -8,25 +8,20 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-    public Chessboard board;
-    public ChessPieces pieces;
-    public GameObject gameOverPanel;
-    public Text winnerText;
-    public Indicator MoveIndicatorPreFab;
-    public Transform parent;
+    [SerializeField] private Chessboard board;
+    [SerializeField] private ChessPieces pieces;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Text winnerText;
+    [SerializeField] private Indicator MoveIndicatorPreFab;
+    [SerializeField] private Transform parent;
+    
+    private Dictionary<(int, int), ChessPiece?> pieceCoordsMap;
     private Dictionary<(int, int), Vector2> coordsTranslationMap;
-    public Dictionary<(int, int), Vector2> CoordsTranslationMap
-    {
-        get { return coordsTranslationMap; }
-    }
-    public Dictionary<(int, int), ChessPiece?> pieceCoordsMap;
     private List<Indicator> activeIndicators = new List<Indicator>();
-    public ChessPiece lastSelectedPiece;
-    public Boolean isWhiteTurn = true;
-    public Boolean isWhiteKingChecked = false;
-    public Boolean isBlackKingChecked = false;
-    public (int, int) whiteKingTilePos = (4,0);
-    public (int, int) blackKingTilePos = (4,7);
+    private ChessPiece lastSelectedPiece;
+    private Boolean isWhiteTurn = true;
+    private (int, int) whiteKingTilePos = (4,0);
+    private (int, int) blackKingTilePos = (4,7);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -97,7 +92,7 @@ public class GameController : MonoBehaviour
         }   
     }
 
-    public void GameOver()
+    private void GameOver()
     {
         gameOverPanel.SetActive(true);
         if (isWhiteTurn)
@@ -115,7 +110,7 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    void changeTurn()
+    private void changeTurn()
     {
         if (isWhiteTurn)
         {
@@ -257,7 +252,7 @@ public class GameController : MonoBehaviour
 
     void SelectPiece(ChessPiece piece)
     {               
-        piece.Select();
+        //piece.Select();
 
         if (piece.PieceColor == ChessPiece.Color.White && isWhiteTurn)
         {
@@ -307,8 +302,7 @@ public class GameController : MonoBehaviour
     // Generate lookup table to translate tile positions to pixel positions
     private void GeneratePixelPosTable()
     {
-        float tileSize = 1.28f;
-        float offset = tileSize * 3.5f;
+        float offset = board.tileSize * 3.5f;
 
         coordsTranslationMap = new Dictionary<(int, int), Vector2>();
 
@@ -316,7 +310,7 @@ public class GameController : MonoBehaviour
         {
             for (int y = 0; y < 8; y++)
             {
-                Vector2 pixelPos = new Vector2((x * tileSize) - offset, (y * tileSize) - offset);
+                Vector2 pixelPos = new Vector2((x * board.tileSize) - offset, (y * board.tileSize) - offset);
                 coordsTranslationMap.Add((x, y), pixelPos);
             }
         }

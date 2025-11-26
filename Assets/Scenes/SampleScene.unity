@@ -519,11 +519,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1798258741}
   winnerText: {fileID: 511362205}
   MoveIndicatorPreFab: {fileID: 4956120194937412189, guid: c90933318619f9a49bcae1b70038775d, type: 3}
-  parent: {fileID: 0}
-  lastSelectedPiece: {fileID: 0}
-  isWhiteTurn: 1
-  isWhiteKingChecked: 0
-  isBlackKingChecked: 0
+  parent: {fileID: 1093085559}
 --- !u!4 &1093085559
 Transform:
   m_ObjectHideFlags: 0

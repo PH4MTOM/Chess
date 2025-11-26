@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Rook : ChessPiece
 {
-    public Sprite whiteRookSprite;
-    public Sprite blackRookSprite;
+    [SerializeField] private Sprite whiteRookSprite;
+    [SerializeField] private Sprite blackRookSprite;
 
     public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {

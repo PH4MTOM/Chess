@@ -3,18 +3,16 @@ using UnityEngine;
 
 public class ChessPieces : MonoBehaviour
 {
-    public Transform pieceParent;
-    public ChessPiece pawnPreFab;
-    public ChessPiece rookPreFab;
-    public ChessPiece knightPreFab;
-    public ChessPiece bishopPreFab;
-    public ChessPiece queenPreFab;
-    public ChessPiece kingPreFab;
+    [SerializeField] private Transform pieceParent;
+    [SerializeField] private ChessPiece pawnPreFab;
+    [SerializeField] private ChessPiece rookPreFab;
+    [SerializeField] private ChessPiece knightPreFab;
+    [SerializeField] private ChessPiece bishopPreFab;
+    [SerializeField] private ChessPiece queenPreFab;
+    [SerializeField] private ChessPiece kingPreFab;
 
     private float tileSize = 1.28f;
-
-    string[] pieceSpawnSequence = { "Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
-
+    private string[] pieceSpawnSequence = { "Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
     private Dictionary<string, ChessPiece> pieceMap;
     private Dictionary<(int, int), ChessPiece?> initPieceCoordsMap;
 
@@ -68,16 +66,5 @@ public class ChessPieces : MonoBehaviour
         }
 
         return initPieceCoordsMap;
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
