@@ -1,4 +1,3 @@
-using System.Drawing;
 using UnityEngine;
 
 public class Indicator : MonoBehaviour

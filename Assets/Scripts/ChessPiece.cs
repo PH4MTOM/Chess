@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public abstract class ChessPiece : MonoBehaviour
 {
     public enum Color { White, Black }
     public Color PieceColor { get; protected set; }
     public string PieceName { get; protected set; }
-    public bool HasMoved { get; protected set; } = false; // Useful for pawns and castling
+    public bool HasMoved { get; protected set; } = false;
     public bool IsCaptured { get; protected set; } = false;
     public abstract List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap);
     public (int, int) CurrentTilePosition;
