@@ -5,14 +5,52 @@ public class Knight : ChessPiece
 {
     public Sprite whiteKnightSprite;
     public Sprite blackKnightSprite;
-    public override void Move(Vector2 newPosition)
-    {
-        throw new System.NotImplementedException();
-    }
 
-    public override List<Vector2> GetPossibleMoves()
+    public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {
-        throw new System.NotImplementedException();
+        var possibleMoves = new List<(int, int)> { };
+        var prePossibleMoves = new List<(int, int)> { };
+
+        void CheckAndAddMove(List<(int, int)> possibleTile)
+        {
+            foreach ((int, int) posTile in possibleTile)
+            {
+                // The boundaries of the board.
+                if (posTile.Item1 >= 0 && posTile.Item1 <= 7 && posTile.Item2 >= 0 && posTile.Item2 <= 7)
+                {
+                    var piece = pieceCoordsMap[posTile];
+                    if (piece != null)
+                    {
+                        if (piece.PieceColor != PieceColor)
+                        {
+                            possibleMoves.Add(posTile);
+                        }
+                    } 
+                    else
+                    {
+                        possibleMoves.Add(posTile);
+                    }
+                }
+            }
+        }
+
+        // Adding upper part of the knights moves
+        prePossibleMoves.Add((CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 + 2));
+        prePossibleMoves.Add((CurrentTilePosition.Item1 + 2, CurrentTilePosition.Item2 + 1));
+
+        prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 + 2));
+        prePossibleMoves.Add((CurrentTilePosition.Item1 - 2, CurrentTilePosition.Item2 + 1));
+
+        // Adding the lower part of the knights moves
+        prePossibleMoves.Add((CurrentTilePosition.Item1 + 1, CurrentTilePosition.Item2 - 2));
+        prePossibleMoves.Add((CurrentTilePosition.Item1 + 2, CurrentTilePosition.Item2 - 1));
+
+        prePossibleMoves.Add((CurrentTilePosition.Item1 - 1, CurrentTilePosition.Item2 - 2));
+        prePossibleMoves.Add((CurrentTilePosition.Item1 - 2, CurrentTilePosition.Item2 - 1));
+
+        CheckAndAddMove(prePossibleMoves);
+
+        return possibleMoves;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

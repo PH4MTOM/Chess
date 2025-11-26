@@ -1,24 +1,23 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public abstract class ChessPiece : MonoBehaviour
 {
     public enum Color { White, Black }
     public Color PieceColor { get; protected set; }
     public string PieceName { get; protected set; }
-    public Vector2 CurrentPosition { get; protected set; }
     public bool HasMoved { get; protected set; } = false; // Useful for pawns and castling
     public bool IsCaptured { get; protected set; } = false;
-    public abstract List<Vector2> GetPossibleMoves();
-    public abstract void Move(Vector2 newPosition);
+    public abstract List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap);
+    public (int, int) CurrentTilePosition;
 
-    public void Init(string name, Color color, Vector2 startPosition)
+    public void Init(string name, Color color, (int, int) tilePosition)
     {
         PieceName = name;
         PieceColor = color;
-        CurrentPosition = startPosition;
-
         gameObject.name = name;
+        CurrentTilePosition = tilePosition;
     }
     public void Select()
     {
@@ -28,5 +27,11 @@ public abstract class ChessPiece : MonoBehaviour
     public void Deselect()
     {
         Debug.Log($"{PieceName} deselected.");
+    }
+    public void Move(Vector2 pixelPos, (int, int) tilePos)
+    {
+        gameObject.transform.position = pixelPos;
+        CurrentTilePosition = tilePos;
+        HasMoved = true;
     }
 }

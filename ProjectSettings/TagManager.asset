@@ -47,5 +47,8 @@ TagManager:
   - name: ChessPieces
     uniqueID: 1357968745
     locked: 0
+  - name: Indicator
+    uniqueID: 1073870235
+    locked: 0
   m_RenderingLayers:
   - Default
