@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform parent;
     
     private Dictionary<(int, int), ChessPiece?> pieceCoordsMap;
-    private Dictionary<(int, int), Vector2> coordsTranslationMap;
+    public Dictionary<(int, int), Vector2> coordsTranslationMap { get; private set; }
     private List<Indicator> activeIndicators = new List<Indicator>();
     private ChessPiece lastSelectedPiece;
     private Boolean isWhiteTurn = true;
