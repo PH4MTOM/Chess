@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
                 {
                     MovePiece(lastSelectedPiece, indicator);
                     changeTurn();
-                    if (isCheckmate(pieceCoordsMap))
+                    if (IsCheckmate(pieceCoordsMap))
                     {
                         GameOver();
                     }
@@ -122,7 +122,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    Boolean isCheckmate(Dictionary<(int, int), ChessPiece?> pieceCoordsMap)
+    Boolean IsCheckmate(Dictionary<(int, int), ChessPiece?> pieceCoordsMap)
     {
         var filteredMoves = new List<(int, int)> { };
 
@@ -200,9 +200,9 @@ public class GameController : MonoBehaviour
     {
         var filteredCoordList = new List<(int, int)> { };
 
-        foreach ((int, int) item in piece.GetPossibleMoves(pieceCoordsMap))
+        foreach ((int, int) item in piece.GetPossibleMoves(pieceCoordMap as Dictionary<(int, int), ChessPiece>))
         {
-            var tempPieceCoordsMap = new Dictionary<(int, int), ChessPiece?>(pieceCoordsMap);
+            var tempPieceCoordsMap = new Dictionary<(int, int), ChessPiece?>(pieceCoordMap);
             tempPieceCoordsMap[piece.CurrentTilePosition] = null;
             tempPieceCoordsMap[item] = piece;
 
@@ -223,7 +223,7 @@ public class GameController : MonoBehaviour
                         continue;
                     }
                 }
-            } 
+            }
             else
             {
                 if (piece is King)
@@ -242,7 +242,7 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
-   
+
             // Adding the move to the filtered list
             filteredCoordList.Add(item);
         }
