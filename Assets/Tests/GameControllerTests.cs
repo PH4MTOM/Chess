@@ -5,15 +5,6 @@ using System.Reflection;
 
 public class GameControllerTests
 {
-    private class DummyPiece : ChessPiece
-    {
-        public List<(int, int)> Moves = new List<(int, int)>();
-        public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
-        {
-            return new List<(int, int)>(Moves);
-        }
-    }
-
     private Dictionary<(int, int), ChessPiece?> CreateEmptyBoard()
     {
         var map = new Dictionary<(int, int), ChessPiece?>();
