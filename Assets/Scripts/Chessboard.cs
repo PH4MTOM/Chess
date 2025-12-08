@@ -2,17 +2,11 @@ using UnityEngine;
 
 public class Chessboard : MonoBehaviour
 {
-    public GameObject tilePrefab;
-    public Transform boardParent;
-    public Sprite lightBrownTileSprite;
-    public Sprite darkBrownTileSprite;
-    private float tileSize = 1.28f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //GenerateBoard();
-    }
+    [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private Transform boardParent;
+    [SerializeField] private Sprite lightBrownTileSprite;
+    [SerializeField] private Sprite darkBrownTileSprite;
+    public float tileSize { get; private set; } = 1.28f;
 
     public void GenerateBoard()
     {
@@ -30,11 +24,5 @@ public class Chessboard : MonoBehaviour
                 tile.GetComponent<SpriteRenderer>().sprite = isLightBrown ? lightBrownTileSprite : darkBrownTileSprite;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

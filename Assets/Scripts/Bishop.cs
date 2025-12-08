@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class Bishop : ChessPiece
 {
-    public Sprite whiteBishopSprite;
-    public Sprite blackBishopSprite;
+   [SerializeField] private Sprite whiteBishopSprite;
+   [SerializeField] private Sprite blackBishopSprite;
 
     public override List<(int, int)> GetPossibleMoves(Dictionary<(int, int), ChessPiece> pieceCoordsMap)
     {

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Failed(Child)" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.051543">
+  <test-suite type="TestSuite" id="1014" name="Chess" fullname="Chess" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.051543" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1009" name="Tests.dll" fullname="C:/Users/Simon/Chess/Library/ScriptAssemblies/Tests.dll" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.043742" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="32800" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1001" name="HelloWorld" fullname="HelloWorld" classname="HelloWorld" runstate="Runnable" testcasecount="1" result="Passed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.018504" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1002" name="hello" fullname="HelloWorld.hello" methodname="hello" classname="HelloWorld" runstate="Runnable" seed="1741135413" result="Passed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.007372" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <reason>
+            <message><![CDATA[]]></message>
+          </reason>
+          <output><![CDATA[My first test has been runned!
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1003" name="PawnTests" fullname="PawnTests" classname="PawnTests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.014618" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1004" name="Pawn_Center_EmptyBoard_ReturnExpectedMoves" fullname="PawnTests.Pawn_Center_EmptyBoard_ReturnExpectedMoves" methodname="Pawn_Center_EmptyBoard_ReturnExpectedMoves" classname="PawnTests" runstate="Runnable" seed="70102243" result="Failed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.012966" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  Expected: collection containing (4, 3)
+  But was:  < (3, 4), (3, 5) >
+]]></message>
+            <stack-trace><![CDATA[at PawnTests.Pawn_Center_EmptyBoard_ReturnExpectedMoves () [0x00069] in C:\Users\Simon\Chess\Assets\Tests\PawnTests.cs:36
+]]></stack-trace>
+          </failure>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1005" name="QueenTests" fullname="QueenTests" classname="QueenTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.008379" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1007" name="Queen_BlockedByOwnPiece" fullname="QueenTests.Queen_BlockedByOwnPiece" methodname="Queen_BlockedByOwnPiece" classname="QueenTests" runstate="Runnable" seed="1546497333" result="Passed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.003945" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1008" name="Queen_CanCapture_EnemyPiece" fullname="QueenTests.Queen_CanCapture_EnemyPiece" methodname="Queen_CanCapture_EnemyPiece" classname="QueenTests" runstate="Runnable" seed="52338138" result="Passed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.000536" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1006" name="Queen_Center_EmptyBoard_ReturnsExpectedMoves" fullname="QueenTests.Queen_Center_EmptyBoard_ReturnsExpectedMoves" methodname="Queen_Center_EmptyBoard_ReturnsExpectedMoves" classname="QueenTests" runstate="Runnable" seed="1671399761" result="Passed" start-time="2025-12-02 13:47:46Z" end-time="2025-12-02 13:47:46Z" duration="0.000796" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: C:/Users/Simon/AppData/LocalLow/DefaultCompany/Chess\TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
